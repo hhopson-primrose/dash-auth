@@ -47,6 +47,7 @@ class BasicAuth(Auth):
             you should create a key and then assign the value of
             that key in your code.
         """
+        self._username = ''
         super().__init__(app, public_routes=public_routes)
         self._auth_func = auth_func
         self._user_groups = user_groups
@@ -80,6 +81,7 @@ class BasicAuth(Auth):
         username_password = base64.b64decode(header.split('Basic ')[1])
         username_password_utf8 = username_password.decode('utf-8')
         username, password = username_password_utf8.split(':', 1)
+        self._username = username
         authorized = False
         if self._auth_func is not None:
             try:
